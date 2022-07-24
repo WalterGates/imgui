@@ -84,13 +84,17 @@
 #ifdef IMGUI_USE_GLM
 #   include <glm/vec2.hpp>
 #   define IM_VEC2_CLASS_EXTRA                                                  \
-        constexpr ImVec2(const glm::vec2& v) : x(v.x), y(v.y) {}                \
-        operator glm::vec2() const { return glm::vec2(x, y); }
+        constexpr ImVec2(const glm::vec2& v) : ImVec2(v.x, v.y) {}              \
+        constexpr ImVec2(const glm::ivec2& v) : ImVec2((glm::vec2)v) {}         \
+        operator glm::vec2() const { return glm::vec2(x, y); }                  \
+        operator glm::ivec2() const { return (glm::ivec2)(glm::vec2)*this; }
 
 #   include <glm/vec4.hpp>
 #   define IM_VEC4_CLASS_EXTRA                                                  \
-       constexpr ImVec4(const glm::vec4& v) : x(v.x), y(v.y), z(v.z), w(v.w) {} \
-       operator glm::vec4() const { return glm::vec4(x, y, z, w); }
+       constexpr ImVec4(const glm::vec4& v) : ImVec4(v.x, v.y, v.z, v.w) {}     \
+       constexpr ImVec4(const glm::ivec4& v) : ImVec4((glm::vec4)v) {}          \
+       operator glm::vec4() const { return glm::vec4(x, y, z, w); }             \
+       operator glm::ivec4() const { return (glm::ivec4)(glm::vec4)*this; }
 #endif
 
 //---- Use 32-bit vertex indices (default is 16-bit) is one way to allow large meshes with more than 64K vertices.
